@@ -195,6 +195,12 @@ function createApplicationAt(path) {
       default:
     }
 
+    switch (lang) {
+      case 'coffee':
+        pkg.dependencies['coffee-script'] = '1.7.1';
+        break;
+    }
+
     // CSS Engine support
     switch (program.css) {
       case 'less':
