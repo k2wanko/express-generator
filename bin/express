@@ -17,7 +17,7 @@ var version = pkg.version;
 program
   .version(version)
   .usage('[options] [dir]')
-  .option('-l, --lang <lang>', 'Codeing language support (js|coffee) (default to js)')
+  .option('-l, --lang <lang>', 'Coding language support (js|coffee) (default to js)')
   .option('-e, --ejs', 'add ejs engine support (defaults to jade)')
   .option('-H, --hogan', 'add hogan.js engine support')
   .option('-c, --css <engine>', 'add stylesheet <engine> support (less|stylus|compass) (defaults to plain css)')
@@ -151,7 +151,11 @@ function createApplicationAt(path) {
     });
 
     function langConvert(src){
-      return js2coffee.build(src);
+      switch(lang) {
+        case 'coffee':
+          return js2coffee.build(src);
+      }
+      return src;
     }
 
     // CSS Engine support
