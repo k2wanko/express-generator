@@ -6,6 +6,8 @@ var os = require('os');
 var fs = require('fs');
 var path = require('path');
 
+var js2coffee = require('js2coffee');
+
 var pkg = require('../package.json');
 
 var version = pkg.version;
@@ -148,16 +150,20 @@ function createApplicationAt(path) {
       }
     });
 
+    function langConvert(src){
+      return js2coffee.build(src);
+    }
+
     // CSS Engine support
     switch (program.css) {
       case 'less':
-        app = app.replace('{css}', eol + 'app.use(require(\'less-middleware\')(path.join(__dirname, \'public\')));');
+        app = app.replace('{css}', eol + langConvert('app.use(require(\'less-middleware\')(path.join(__dirname, \'public\')));'));
         break;
       case 'stylus':
-        app = app.replace('{css}', eol + 'app.use(require(\'stylus\').middleware(path.join(__dirname, \'public\')));');
+        app = app.replace('{css}', eol + langConvert('app.use(require(\'stylus\').middleware(path.join(__dirname, \'public\')));'));
         break;
       case 'compass':
-        app = app.replace('{css}', eol + 'app.use(require(\'node-compass\')({mode: \'expanded\'}));');
+        app = app.replace('{css}', eol + langConvert('app.use(require(\'node-compass\')({mode: \'expanded\'}));'));
         break;
       default:
         app = app.replace('{css}', '');

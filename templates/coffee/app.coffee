@@ -18,7 +18,7 @@ app.use logger("dev")
 app.use bodyParser.json()
 app.use bodyParser.urlencoded()
 app.use cookieParser()
-css
+{css}
 app.use express.static(path.join(__dirname, "public"))
 app.use "/", routes
 app.use "/users", users
